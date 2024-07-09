@@ -21,13 +21,13 @@ $data = ambilSemuaDataset();
 	<link rel="stylesheet" href="./public/css/style.css">
 	<link rel="stylesheet" href="./public/css/app.css">
 	
-	<title>Dataset | Klasifikasi Status Gizi</title>
+	<title>Dataset | Klasifikasi BUMDes Kab.Tulungagung</title>
 </head>
 <body>
 
 	<nav class="nav mb-4">
 		<div class="container">
-			<h1>Klasifikasi Status Gizi Menggunakan Metode K-NN</h1>
+			<h1>Klasifikasi BUMDes Kab.Tulungagaung</h1>
 		</div>
 	</nav>
 	
@@ -50,15 +50,20 @@ $data = ambilSemuaDataset();
 					<table class="table">
 						<thead class="thead-light">
 					    <tr>
-					      <th class="text-center">No</th>
-					      <th class="text-center">Nama</th>
-					      <th class="text-center">Jenis Kelamin</th>
-					      <th class="text-center">Umur</th>
-					      <th class="text-center">Berat Badan</th>
-					      <th class="text-center">Tinggi Badan</th>
-					      <th class="text-center">Lingkar Kepala</th>
-					      <th class="text-center">Klasifikasi</th>
-					      <th class="text-center">Aksi</th>
+							<th class="text-center">No</th>
+							<th class="text-center">Kecamatan</th>
+							<th class="text-center">Desa</th>
+							<th class="text-center">Nama BUMDes</th>
+							<th class="text-center">Status Badan Hukum</th>
+							<th class="text-center">Lama Usaha</th>
+							<th class="text-center">Jumlah Unit Usaha</th>
+							<th class="text-center">Total Modal</th>
+							<th class="text-center">Perkembangan Modal</th>
+							<th class="text-center">Selisih Modal</th>
+							<th class="text-center">Jarak Hasil</th>
+							<th class="text-center">Nilai K</th>
+							<th class="text-center">Klasifikasi</th>
+							<th class="text-center">Aksi</th>
 					    </tr>
 					  </thead>
 						<tbody>
@@ -69,30 +74,37 @@ $data = ambilSemuaDataset();
 						<?php } else { ?>
 					  	<?php $i = 1; ?>
 					  	<?php foreach ($data as $dt) : ?>
+							<?php $selisih = $dt['total_modal'] - $dt['perkembangan_modal']; ?>
 					  		<tr>
 					  			<td align="center"><?= $i; ?></td>
-					  			<td><?= $dt['nama']; ?></td>
-					  			<td><?= $dt['jenis_kelamin'] == 1 ? "Laki - laki" : "Perempuan";  ?></td>
-					  			<td align="center"><?= $dt['umur']; ?> Bulan</td>
-					  			<td align="center"><?= $dt['berat_badan']; ?> Kg</td>
-					  			<td align="center"><?= $dt['tinggi_badan']; ?> Cm</td>
-					  			<td align="center"><?= $dt['lingkar_kepala']; ?> Cm</td>
-					  			<?php if ($dt['klasifikasi'] == 'buruk') { ?>
+					  			<td><?= $dt['kecamatan']; ?></td>
+								<td><?= $dt['desa']; ?></td>
+								<td><?= $dt['nama_bumdes']; ?></td>
+								<td><?= $dt['status_badan_hukum'] == "Pendaftaran Badan Hukum" ? 0 : (
+											$dt['status_badan_hukum'] == "Nama Terverifikasi" ? 1 : (
+												$dt['status_badan_hukum'] == "Perbaikan Dokumen Badan Hukum" ? 2 : (
+													$dt['status_badan_hukum'] == "Dokumen Badan Hukum Terverifikasi" ? 3 : "Status Tidak Dikenal"))); ?>
+								</td>
+					  			<td align="center"><?= $dt['lama_usaha']; ?> Tahun</td>
+					  			<td align="center"><?= $dt['jml_unit_usaha']; ?> Unit</td>
+					  			<td align="center"><?= $dt['total_modal']; ?> </td>
+					  			<td align="center"><?= $dt['perkembangan_modal']; ?> </td>
+								<!-- ini td diedit blm ditest boszzz -->
+								<td align="center"><?= $selisih ?> </td>
+					  			<td align="center"><?= $dt['jarak_hasil']; ?></td>
+					  			<td align="center"><?= $dt['nilai_k']; ?></td>
+					  			<?php if ($dt['klasifikasi'] == 'pemula') { ?>
 					  				<td align="center">
 					  					<span class="badge badge-danger"><?= ucfirst($dt['klasifikasi']); ?></span>
 					  				</td>
-					  			<?php } else if ($dt['klasifikasi'] == 'kurang') { ?>
+					  			<?php } else if ($dt['klasifikasi'] == 'berkembang') { ?>
 					  				<td align="center">
 					  					<span class="badge badge-warning"><?= ucfirst($dt['klasifikasi']); ?></span>
 				  					</td>
-					  			<?php } else if ($dt['klasifikasi'] == 'baik') { ?>
+					  			<?php } else if ($dt['klasifikasi'] == 'maju') { ?>
 					  				<td align="center">
 					  					<span class="badge badge-success"><?= ucfirst($dt['klasifikasi']); ?></span>
 				  					</td>
-				  				<?php } else if ($dt['klasifikasi'] == 'lebih') { ?>
-				  					<td align="center">
-				  						<span class="badge badge-primary"><?= ucfirst($dt['klasifikasi']); ?></span>
-			  						</td>
 			  					<?php } ?>
 
 			  					 <td align="center" class="nowrap">

@@ -33,12 +33,12 @@ if (isset($_GET["id"])) {
 	<link rel="stylesheet" href="./public/css/style.css">
 	<link rel="stylesheet" href="./public/css/app.css">
 	
-	<title>Edit Dataset | Klasifikasi Status Gizi</title>
+	<title>Edit Dataset | Klasifikasi BUMDes Kab.Tulungagung</title>
 </head>
 <body>
 	<nav class="nav mb-4">
 		<div class="container">
-			<h1>Klasifikasi Status Gizi Menggunakan Metode K-NN</h1>
+			<h1>Klasifikasi BUMDes Kab.Tulungagaung</h1>
 		</div>
 	</nav>
 
@@ -58,43 +58,56 @@ if (isset($_GET["id"])) {
 				<div class="card-body">
 					<form action="./app/proses/edit.php" method="POST">
 						<input type="number" hidden name="id" value="<?= $data['id']; ?>" required>
-				   	<div class="form-group mb-3">
-						   <label for="nama">Nama</label>
-						   <input type="text" class="form-control" placeholder="Rully Ihza Mahendra" id="nama" name="nama" value="<?= $data['nama']; ?>" required>
-						</div>					
+						<div class="form-group mb-3">
+								<label for="nama">Kecamatan</label>
+								<input type="text" class="form-control" placeholder="Boyolangu" id="kecamatan" name="kecamatan" value="<?= $data['kecamatan']; ?>" required>
+							</div>
+							<div class="form-group mb-3">
+								<label for="nama">Desa</label>
+								<input type="text" class="form-control" placeholder="Wajak Kidul" id="desa" name="desa" value="<?= $data['desa']; ?>" required>
+							</div>
+							<div class="form-group mb-3">
+								<label for="nama">Nama BUMDes</label>
+								<input type="text" class="form-control" placeholder="Larasati" id="nama_bumdes" name="nama_bumdes" value="<?= $data['nama_bumdes']; ?>" required>
+							</div>					
 						<div class="row row-cols-3">
 							<div class="form-group">
-							   <label for="jenisKelamin">Jenis Kelamin</label>
-							   <select name="jenis_kelamin" id="jenisKelamin" class="form-control" required>
-						   		<option <?= $data["jenis_kelamin"] == "1" ? 'selected' : ''; ?> value="1">Laki-laki</option>
-						   		<option <?= $data["jenis_kelamin"] == "2" ? 'selected' : ''; ?> value="2">Perempuan</option>
+							   <label for="status_badan_hukum">Status Badan Hukum</label>
+							   <select name="status_badan_hukum" id="status_badan_hukum" class="form-control" required>
+						   		<option <?= $data["status_badan_hukum"] == "0" ? 'selected' : ''; ?> value="0">Pendaftaran Badan Hukum</option>
+						   		<option <?= $data["status_badan_hukum"] == "1" ? 'selected' : ''; ?> value="1">Nama Terverifikasi</option>
+								<option <?= $data["status_badan_hukum"] == "2" ? 'selected' : ''; ?> value="2">Perbaikan Dokumen Badan Hukum</option>
+								<option <?= $data["status_badan_hukum"] == "3" ? 'selected' : ''; ?> value="3">Dokumen Badan Hukum Terverifikasi</option>
 							   </select>
 							</div>
 							<div class="form-group">
-							   <label for="umur">Umur <small>(Bulan)</small></label>
-							   <input type="number" min="0" name="umur" class="form-control" id="umur" value="<?= $data['umur']; ?>" required>
+							   <label for="lama_usaha">Lama Usaha <small>(Tahun)</small></label>
+							   <input type="number" min="0" name="lama_usaha" class="form-control" id="lama_usaha" value="<?= $data['lama_usaha']; ?>" required>
 							</div>
 							<div class="form-group">
-							   <label for="beratBadan">Berat Badan <small>(Kg)</small></label>
-							   <input type="number" step="any" min="0" name="berat_badan" class="form-control" id="beratBadan" value="<?= $data['berat_badan']; ?>" required>
+							   <label for="jml_unit_usaha">Jumlah Unit Usaha <small>(Unit)</small></label>
+							   <input type="number" step="any" min="0" name="jml_unit_usaha" class="form-control" id="jml_unit_usaha" value="<?= $data['jml_unit_usaha']; ?>" required>
 							</div>
 						</div>
 						<div class="row row-cols-3">
 							<div class="form-group">
-							   <label for="tinggiBadan">Tinggi Badan <small>(Cm)</small></label>
-							   <input type="number" step="any" min="0" name="tinggi_badan" class="form-control" id="tinggiBadan" value="<?= $data['tinggi_badan']; ?>" required>
+							   <label for="total_modal">Total Modal </label>
+							   <input type="number" step="any" min="0" name="total_modal" class="form-control" id="total_modal" value="<?= $data['total_modal']; ?>" required>
 							</div>
 							<div class="form-group">
-							   <label for="lingkarKepala">Lingkar Kepala <small>(Cm)</small></label>
-							   <input type="number" step="any" min="0" name="lingkar_kepala" class="form-control" id="lingkarKepala" value="<?= $data['lingkar_kepala']; ?>" required>
+							   <label for="perkembangan_modal">Perkembangan Modal </label>
+							   <input type="number" step="any" min="0" name="perkembangan_modal" class="form-control" id="perkembangan_modal" value="<?= $data['perkembangan_modal']; ?>" required>
+							</div>
+							<div class="form-group">
+							   <label for="selisih_modal">Selisih Modal </label>
+							   <input type="number" step="any" min="0" name="selisih_modal" class="form-control" id="selisih_modal" value="<?= $data['selisih_modal']; ?>" required>
 							</div>
 							<div class="form-group">
 						   <label for="klasifikasi">Klasifikasi</label>
 						   <select name="klasifikasi" id="klasifikasi" class="form-control" required>
-					   		<option <?= $data["klasifikasi"] == "lebih" ? "selected" : ""; ?> value="lebih">Lebih</option>
-					   		<option <?= $data["klasifikasi"] == "baik" ? "selected" : ""; ?> value="baik">Baik</option>
-						   	<option <?= $data["klasifikasi"] == "kurang" ? "selected" : ""; ?> value="kurang">Kurang</option>
-						   	<option <?= $data["klasifikasi"] == "buruk" ? "selected" : ""; ?> value="buruk">Buruk</option>
+					   		<option <?= $data["klasifikasi"] == "maju" ? "selected" : ""; ?> value="maju">Maju</option>
+					   		<option <?= $data["klasifikasi"] == "berkembang" ? "selected" : ""; ?> value="berkembang">Berkembang</option>
+						   	<option <?= $data["klasifikasi"] == "pemula" ? "selected" : ""; ?> value="pemula">Pemula</option>
 						   </select>
 						</div>
 						</div>

@@ -1,10 +1,5 @@
 <?php
 
-/*
- * @author Rully Ihza Mahendra <rullyihza00@gmail.com>
- * @github https://github.com/rllyhz 
- */
-
 namespace Rllyhz\Dev\KNN;
 
 class Data {

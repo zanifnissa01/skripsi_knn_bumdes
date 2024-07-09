@@ -17,12 +17,12 @@ require_once __DIR__ . '/app/init.php';
 	<link rel="stylesheet" href="./public/css/style.css">
 	<link rel="stylesheet" href="./public/css/app.css">
 	
-	<title>Import Dataset | Klasifikasi Status Gizi</title>
+	<title>Import Dataset | Klasifikasi BUMDes Kab.Tulungagung</title>
 </head>
 <body>
 	<nav class="nav mb-4">
 		<div class="container">
-			<h1>Klasifikasi Status Gizi Menggunakan Metode K-NN</h1>
+			<h1>Klasifikasi BUMDes Kab.Tulungagung</h1>
 		</div>
 	</nav>
 
@@ -45,35 +45,44 @@ require_once __DIR__ . '/app/init.php';
 						<thead class="thead-light">
 							<tr>
 								<th class="text-center">No</th>
-						      <th class="text-center">Nama</th>
-						      <th class="text-center">Jenis Kelamin</th>
-						      <th class="text-center">Umur</th>
-						      <th class="text-center">Berat Badan</th>
-						      <th class="text-center">Tinggi Badan</th>
-						      <th class="text-center">Lingkar Kepala</th>
-						      <th class="text-center">Klasifikasi</th>
+								<th class="text-center">Kecamatan</th>
+								<th class="text-center">Desa</th>
+								<th class="text-center">Nama BUMDes</th>
+								<th class="text-center">Status Badan Hukum</th>
+								<th class="text-center">Lama Usaha</th>
+								<th class="text-center">Jumlah Unit Usaha</th>
+								<th class="text-center">Total Modal</th>
+								<th class="text-center">Perkembangan Modal</th>
+								<th class="text-center">Selisih Modal</th>
+								<th class="text-center">Klasifikasi</th>
 							</tr>   
 						 </thead>
 						<tbody>
 							<tr>
 								<td align="center">1</td>
-								<td>Contoh nama</td>
-								<td align="center">0</td>
-								<td align="center">19</td>
-								<td align="center">23.4</td>
-								<td align="center">43.1</td>
-								<td align="center">34.7</td>
-								<td align="center">baik</td>
+								<td>Contoh Kecamatan</td>
+								<td>Contoh Desa</td>
+								<td>Contoh Nama BUMDes</td>
+								<td align="center">1</td>
+								<td align="center">7</td>
+								<td align="center">7</td>
+								<td align="center">15000000</td>
+								<td align="center">16926588</td>
+								<td align="center">1926588</td>
+								<td align="center">Berkembang</td>
 							</tr>
 							<tr>
 								<td align="center">2</td>
-								<td>Contoh nama 2</td>
+								<td>Contoh Kecamatan 2</td>
+								<td>Contoh Desa 2</td>
+								<td>Contoh Nama BUMDes 2</td>
+								<td align="center">3</td>
+								<td align="center">4</td>
 								<td align="center">1</td>
-								<td align="center">21</td>
-								<td align="center">27.2</td>
-								<td align="center">41.8</td>
-								<td align="center">36.1</td>
-								<td align="center">kurang</td>
+								<td align="center">183633750</td>
+								<td align="center">257003350</td>
+								<td align="center">73369600</td>
+								<td align="center">Maju</td>
 							</tr>
 							<tr>
 								<td align="center">...</td>

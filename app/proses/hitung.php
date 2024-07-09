@@ -11,23 +11,27 @@ if (dataFormLengkap($_POST, 'formHitungKlasifikasi')) {
 	$k = intval($_POST["tetangga_terdekat"]);
 
 	$dataUntukDihitung = [
-		"nama" =>  $_POST["nama"],
-		"jenis_kelamin" =>  intval($_POST["jenis_kelamin"]),
-		"umur" =>  intval($_POST["umur"]),
-		"berat_badan" =>  doubleval($_POST["berat_badan"]),
-		"tinggi_badan" =>  doubleval($_POST["tinggi_badan"]),
-		"lingkar_kepala" =>  doubleval($_POST["lingkar_kepala"]),
+		"kecamatan" =>  $_POST["kecamatan"],
+		"desa" =>  $_POST["desa"],
+		"nama_bumdes" =>  $_POST["nama_bumdes"],
+		"status_badan_hukum" =>  intval($_POST["status_badan_hukum"]),
+		"lama_usaha" =>  intval($_POST["lama_usaha"]),
+		"jml_unit_usaha" =>  intval($_POST["jml_unit_usaha"]),
+		"total_modal" =>  doubleval($_POST["total_modal"]),
+		"perkembangan_modal" =>  doubleval($_POST["perkembangan_modal"]),
+		"selisih_modal" =>  doubleval($_POST["selisih_modal"]),
 	];
 
 	$semuaData = ambilSemuaDataset();
 
 	$schema = new Schema();
 	$schema
-		->tambahParameter('jenis_kelamin')
-		->tambahParameter('umur')
-		->tambahParameter('berat_badan')
-		->tambahParameter('tinggi_badan')
-		->tambahParameter('lingkar_kepala')
+		->tambahParameter('status_badan_hukum')
+		->tambahParameter('lama_usaha')
+		->tambahParameter('jml_unit_usaha')
+		->tambahParameter('total_modal')
+		->tambahParameter('perkembangan_modal')
+		->tambahParameter('selisih_modal')
 		->setParameterKlasifikasi('klasifikasi');
 
 	$dataset = new DataSet($schema, $k);
@@ -36,12 +40,15 @@ if (dataFormLengkap($_POST, 'formHitungKlasifikasi')) {
 	foreach ($semuaData as $data) {
 
 		$dataset->tambah(new Data([
-			'nama' => $data['nama'],
-			'jenis_kelamin' => intval($data['jenis_kelamin']),
-			'umur' => intval($data['umur']),
-			'berat_badan' => floatval($data['berat_badan']),
-			'tinggi_badan' => floatval($data['tinggi_badan']),
-			'lingkar_kepala' => floatval($data['lingkar_kepala']),
+			'kecamatan' => $data['kecamatan'],
+			'desa' => $data['desa'],
+			'nama_bumdes' => $data['nama_bumdes'],
+			'status_badan_hukum' => intval($data['status_badan_hukum']),
+			'lama_usaha' => intval($data['lama_usaha']),
+			'jml_unit_usaha' => intval($data['jml_unit_usaha']),
+			'total_modal' => floatval($data['total_modal']),
+			'perkembangan_modal' => floatval($data['perkembangan_modal']),
+			'selisih_modal' => floatval($data['selisih_modal']),
 			'klasifikasi' => $data['klasifikasi']
 		]));
 
@@ -49,12 +56,15 @@ if (dataFormLengkap($_POST, 'formHitungKlasifikasi')) {
 
 	$hasil = $dataset->hitung(
 		new Data([
-			'nama' => $dataUntukDihitung["nama"],
-			'jenis_kelamin' => $dataUntukDihitung["jenis_kelamin"],
-			'umur' => $dataUntukDihitung["umur"],
-			'berat_badan' => $dataUntukDihitung["berat_badan"],
-			'tinggi_badan' => $dataUntukDihitung["tinggi_badan"],
-			'lingkar_kepala' => $dataUntukDihitung["lingkar_kepala"]
+			'kecamatan' => $dataUntukDihitung["kecamatan"],
+			'desa' => $dataUntukDihitung["desa"],
+			'nama_bumdes' => $dataUntukDihitung["nama_bumdes"],
+			'status_badan_hukum' => $dataUntukDihitung["status_badan_hukum"],
+			'lama_usaha' => $dataUntukDihitung["lama_usaha"],
+			'jml_unit_usaha' => $dataUntukDihitung["jml_unit_usaha"],
+			'total_modal' => $dataUntukDihitung["total_modal"],
+			'perkembangan_modal' => $dataUntukDihitung["perkembangan_modal"],
+			'selisih_modal' => $dataUntukDihitung["selisih_modal"]
 		])
 	);
 
