@@ -21,12 +21,15 @@ function createTabelDataset() {
 
 	$query = "CREATE TABLE IF NOT EXISTS `dataset` (
 			id INT PRIMARY KEY AUTO_INCREMENT,
-			nama VARCHAR(255),
-			jenis_kelamin INT(1),
-			umur INT(6),
-			berat_badan FLOAT,
-			tinggi_badan FLOAT,
-			lingkar_kepala FLOAT,
+			kecamatan VARCHAR(255),
+			desa VARCHAR(255),
+			nama_bumdes VARCHAR(255),
+			status_badan_hukum INT(1),
+			lama_usaha INT(6),
+			jml_unit_usaha INT(6),
+			total_modal FLOAT,
+			perkembangan_modal FLOAT,
+			selisih_modal FLOAT,
 			klasifikasi VARCHAR(20)
 	)";
 
@@ -38,13 +41,15 @@ function createTabelHasilHitung() {
 
 	$query = "CREATE TABLE IF NOT EXISTS `hasil_hitung` (
 			id INT PRIMARY KEY AUTO_INCREMENT,
-			nama VARCHAR(255),
-			jenis_kelamin INT(1),
-			umur INT(6),
-			berat_badan FLOAT,
-			tinggi_badan FLOAT,
-			lingkar_kepala FLOAT,
-			jarak_hasil FLOAT,
+			kecamatan VARCHAR(255),
+			desa VARCHAR(255),
+			nama_bumdes VARCHAR(255),
+			status_badan_hukum INT(1),
+			lama_usaha INT(6),
+			jml_unit_usaha INT(6),
+			total_modal FLOAT,
+			perkembangan_modal FLOAT,
+			selisih_modal FLOAT,
 			klasifikasi VARCHAR(20),
 			nilai_k INT
 	)";
