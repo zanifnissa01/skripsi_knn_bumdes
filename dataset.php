@@ -37,7 +37,7 @@ $data = ambilSemuaDataset();
 			<a href="index.php" class="btn btn-secondary-outline btn-sm link">Home</a>
 			<a href="dataset.php" class="btn btn-secondary-outline btn-sm link">Dataset</a>
 			<a href="data_hasil_hitung.php" class="btn btn-secondary-outline btn-sm link" style="margin-right: 20px;">Data Hasil Hitung</a>
-			<a href="#" class="btn btn-primary-outline btn-sm link" data-toggle="modal" data-target="#modalTambah">Tambah Data</a>
+			<a href="dataset.php" class="btn btn-primary-outline btn-sm link" data-toggle="modal" data-target="#modalTambah">Tambah Data</a>
 			<a href="import_dataset.php" class="btn btn-primary-outline btn-sm link">Import Dataset</a>
 		</div>
 
@@ -138,42 +138,56 @@ $data = ambilSemuaDataset();
 	      <form action="./app/proses/tambah.php" method="POST">
 	      <div class="modal-body">
 	      	<div class="form-group mb-3">
-				   <label for="nama">Nama</label>
-				   <input type="text" class="form-control" placeholder="Rully Ihza Mahendra" id="nama" name="nama" required>
-				</div>					
+				   <label for="kecamatan">Kecamatan</label>
+				   <input type="text" class="form-control" placeholder="Boyolangu" id="kecamatan" name="kecamatan" required>
+				</div>	
+				<div class="form-group mb-3">
+				   <label for="desa">Desa</label>
+				   <input type="text" class="form-control" placeholder="Wajak Kidul" id="desa" name="desa" required>
+				</div>
+				<div class="form-group mb-3">
+				   <label for="nama_bumdes">Nama BUMDes</label>
+				   <input type="text" class="form-control" placeholder="Sinar Harapan" id="nama_bumdes" name="nama_bumdes" required>
+				</div>				
 				<div class="row row-cols-3">
 					<div class="form-group">
-					   <label for="jenisKelamin">Jenis Kelamin</label>
-					   <select name="jenis_kelamin" id="jenisKelamin" class="form-control" required>
-					   	<option value="1">Laki-laki</option>
-					   	<option value="2">Perempuan</option>
+					   <label for="status_badan_hukum">Status Badan Hukum</label>
+					   <select name="status_badan_hukum" id="status_badan_hukum" class="form-control" required>
+					   	<option value="0">Pendaftaran Badan Hukum</option>
+					   	<option value="1">Nama Terverifikasi</option>
+						<option value="2">Perbaikan Dokumen Badan Hukum</option>
+					   	<option value="3">Dokumen Badan Hukum Terverivikasi</option>
 					   </select>
 					</div>
 					<div class="form-group">
-					   <label for="umur">Umur <small>(Tahun)</small></label>
-					   <input type="number" min="0" name="umur" class="form-control" id="umur" required>
+					   <label for="lama_usaha">Lama Usaha <small>(Tahun)</small></label>
+					   <input type="number" min="0" name="lama_usaha" class="form-control" id="lama_usaha" required>
 					</div>
 					<div class="form-group">
-					   <label for="beratBadan">Berat Badan <small>(Kg)</small></label>
-					   <input type="number" step="any" min="0" name="berat_badan" class="form-control" id="beratBadan" required>
+					   <label for="jml_unit_usaha">Jumlah Unit Usaha <small>(Unit)</small></label>
+					   <input type="number" step="any" min="0" name="jml_unit_usaha" class="form-control" id="jml_unit_usaha" required>
 					</div>
 				</div>
 				<div class="row row-cols-3">
 					<div class="form-group">
-					   <label for="tinggiBadan">Tinggi Badan <small>(Cm)</small></label>
-					   <input type="number" step="any" min="0" name="tinggi_badan" class="form-control" id="tinggiBadan" required>
+					   <label for="total_modal">Total Modal </label>
+					   <input type="number" step="any" min="0" name="total_modal" class="form-control" id="total_modal" required>
 					</div>
 					<div class="form-group">
-					   <label for="lingkarKepala">Lingkar Kepala <small>(Cm)</small></label>
-					   <input type="number" step="any" min="0" name="lingkar_kepala" class="form-control" id="lingkarKepala" required>
+					   <label for="perkembangan_modal">Perkembangan Modal </label>
+					   <input type="number" step="any" min="0" name="perkembangan_modal" class="form-control" id="perkembangan_modal" required>
+					</div>
+					<div class="form-group">
+					<div class="form-group">
+					   <label for="selisih_modal">Selisih Modal </label>
+					   <input type="number" step="any" min="0" name="selisih_modal" class="form-control" id="selisih_modal" required>
 					</div>
 					<div class="form-group">
 					   <label for="klasifikasi">Klasifikasi</label>
 					   <select name="klasifikasi" id="klasifikasi" class="form-control" required>
-					   	<option value="lebih">Lebih</option>
-					   	<option value="baik">Baik</option>
-					   	<option value="kurang">Kurang</option>
-					   	<option value="buruk">Buruk</option>
+					   	<option value="maju">Maju</option>
+					   	<option value="berkembang">Berkembang</option>
+					   	<option value="pemula">Pemula</option>
 					   </select>
 					</div>
 				</div>

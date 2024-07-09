@@ -7,21 +7,16 @@ if (dataFormLengkap($_GET, 'formHapusDataset')) {
 	$hasil = hapusDataBerdasarkanId(intval($_GET["id"]));
 
 	if ($hasil) {
-
 		echo "<script>
-			alert('Berhasil menghapus data!')
+			alert('Berhasil menambahkan data baru!');
 			const getUrl = window.location;
-			const baseUrl = getUrl .protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[1];
+			const baseUrl = getUrl.protocol + '//' + getUrl.host;
 			window.location.href = baseUrl + '/dataset.php';
 		</script>";
-
 	} else {
-		
 		echo "<script>
-			alert('Gagal menghapus data!')
-			const getUrl = window.location;
-			const baseUrl = getUrl .protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[1];
-			window.location.href = baseUrl + '/dataset.php';
+			alert('Gagal menambahkan data baru.');
+			window.history.back(); // Mengembalikan ke halaman sebelumnya
 		</script>";
 	}
 
