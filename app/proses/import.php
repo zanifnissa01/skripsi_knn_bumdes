@@ -26,8 +26,8 @@ if (isset($_FILES["file_dataset"])) {
 		echo "<script>
 			alert('Berhasil mengimport dataset!')
 			const getUrl = window.location;
-			const baseUrl = getUrl .protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[1];
-			window.location.href = baseUrl + '/import_dataset.php';
+			const baseUrl = getUrl.protocol + '//' + getUrl.host;
+			window.location.href = baseUrl + '/dataset.php';
 		</script>";
 
 	} else {
@@ -35,7 +35,7 @@ if (isset($_FILES["file_dataset"])) {
 		echo "<script>
 			alert('Gagal mengimport dataset!')
 			const getUrl = window.location;
-			const baseUrl = getUrl .protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[1];
+			const baseUrl = getUrl.protocol + '//' + getUrl.host;
 			window.location.href = baseUrl + '/import_dataset.php';
 		</script>";
 	}
@@ -44,7 +44,7 @@ if (isset($_FILES["file_dataset"])) {
 	echo "<script>
 			alert('Maaf, aktivitas ini tidak diizinkan!')
 			const getUrl = window.location;
-			const baseUrl = getUrl .protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[1];
+			const baseUrl = getUrl.protocol + '//' + getUrl.host;
 			window.location.href = baseUrl + '/import_dataset.php';
 		</script>";
 	return;

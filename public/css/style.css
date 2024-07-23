@@ -34,8 +34,9 @@ button, select, button, button.btn, .btn, a.btn {
   border: none;
   padding: 0.6rem 1.15rem;
   border-radius: 4px;
-  background: none;
+  background: white;
   outline: none;
+  color: #3b3a99;
 }
 
 select, input[type=text], input[type=number] {
@@ -58,7 +59,7 @@ select:focus + label, input[type=text]:focus + label, input[type=number]:focus +
 }
 
 select {
-  color: #4e4e4e;
+  color: #3b3a99;
 }
 
 hr {
@@ -67,17 +68,18 @@ hr {
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
-  color: #4e4e4e;
+  color: #3b3a99;
 }
 
 small {
   font-size: 12px;
 }
 
+
 nav.nav, .nav {
   position: sticky;
   top: 0;
-  background-color: white;
+  background-color: rgb(201, 235, 241);
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
   padding: 1.2rem 0;
 }
@@ -92,33 +94,34 @@ button:hover, button.btn:hover, .btn:hover, a.btn:hover {
 }
 
 button.btn-primary, a.btn-primary {
-  background-color: #FB9EC4;
+  background-color: #3b3a99;
 }
 
 button.btn-primary-outline, a.btn-primary-outline {
   background: none;
-  border: 1px solid #FB9EC4;
-  color: #FB9EC4;
+  border: 1px solid #3b3a99;
+  color: #3b3a99;
   box-shadow: none;
 }
 button.btn-primary-outline:hover, a.btn-primary-outline:hover {
-  background-color: #FB9EC4;
+  background-color: #3b3a99;
   color: white;
 }
 
 button.btn-secondary, a.btn-secondary {
-  background-color: #FFDAC0;
-  color: #9c887a;
+  background-color: #f33921;
+  color: white;
 }
 
 button.btn-secondary-outline, a.btn-secondary-outline {
   background: none;
-  border: 1px solid #ecaf9e;
-  color: #ecaf9e;
+  border: 1px solid #3b3a99;
+  color: #3b3a99;
   box-shadow: none;
 }
+
 button.btn-secondary-outline:hover, a.btn-secondary-outline:hover {
-  background-color: #ecaf9e;
+  background-color: #3b3a99;
   color: white;
 }
 
@@ -126,6 +129,7 @@ button.cta, .cta, a.cta {
   box-shadow: 1px 1.5px 4px 0 rgba(0, 0, 0, 0.3);
   transition: all 400ms ease-in-out;
 }
+
 button.cta:hover, .cta:hover, a.cta:hover {
   box-shadow: 1px 1.3px 4px 0 rgba(0, 0, 0, 0.2);
 }
@@ -143,16 +147,21 @@ form, .form {
   flex-direction: column;
   margin: 0.6rem 0 1.2rem;
 }
+
 .form-group:hover label {
   color: #8865FF;
 }
+
 .form-group label {
   transition: color 300ms ease-in-out;
   margin-bottom: 0.65rem;
+  color : #3b3a99;
 }
+
 .form-group input, .form-group select {
   width: 100%;
 }
+
 .form-group small {
   margin: 0.3rem 0 0 0.3rem;
 }
@@ -160,12 +169,24 @@ form, .form {
 .card {
   padding: 0.6rem 1rem;
   border: none;
+  border-radius: 15px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  background-color: #eaf7fa;
+}
+
+.card-table {
+  padding: 0.6rem 1rem;
+  border: none;
   border-radius: 8px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  background-color:mintcream;
 }
-.card .card-title {
+
+.card, .card-title {
   padding: 0.85rem 0;
+  text-align: center;
 }
+
 .card .card-title h3 {
   text-align: center;
 }
@@ -176,13 +197,14 @@ table, table.table, .table {
   border-collapse: collapse;
   overflow-x: auto;
 }
+
 table thead, table tbody, table tr, table th, table td, table.table thead, table.table tbody, table.table tr, table.table th, table.table td, .table thead, .table tbody, .table tr, .table th, .table td {
-  border: 1px solid #ecaf9e;
+  border: 1px solid #c6b5fd;
   padding: 0.05rem 0.45rem;
 }
 table thead, table.table thead, .table thead {
-  background-color: #FFDAC0;
-  border-bottom: 2px solid #ecaf9e;
+  background-color: rgb(209, 228, 231);
+  border-bottom: 3px solid #3b3a99;
 }
 table thead tr, table.table thead tr, .table thead tr {
   color: #5c5c5c;
@@ -194,7 +216,7 @@ table tbody tr, table.table tbody tr, .table tbody tr {
   transition: background-color 100ms ease-in-out;
 }
 table tbody tr:hover, table.table tbody tr:hover, .table tbody tr:hover {
-  background-color: #ffede0;
+  background-color: rgb(235, 246, 248);
 }
 table tbody tr .highlight, table.table tbody tr .highlight, .table tbody tr .highlight {
   color: #5cb85c;
@@ -375,7 +397,7 @@ body.modal-open {
 }
 
 .container-fluid {
-  width: 92%;
+  width: 100%;
 }
 
 .mx-1 {

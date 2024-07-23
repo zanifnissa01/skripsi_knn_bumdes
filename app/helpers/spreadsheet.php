@@ -32,12 +32,26 @@ function importDataset(string $path) {
 			} else if ($a == 'B') {
 				$b = ucwords($b);
 			} else if ($a == 'C') {
-				$b = $b == 'L' ? 1 : 2;
-			} else if ($a == 'H') {
+				$b = ucwords($b);
+			} else if ($a == 'D') {
+				$b = ucwords($b);
+			} else if ($a == 'E') {
+				if($b == 'PBH'){
+					$b =  0;
+				} else if($b == 'NT'){
+					$b =  1;
+				} else if($b == 'PDBH'){
+					$b =  2;
+				} else if ($b == 'DBHT'){
+					$b =  3;
+				} else {
+					$b = intval($b);
+				}
+			} else if ($a == 'K') {
 				$b = strtolower($b);
 			} else {
-				$b = floatval($b);
-			}
+					$b = intval($b);
+				}
 
 			$data[] = $b;
 		}

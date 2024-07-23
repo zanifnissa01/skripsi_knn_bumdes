@@ -17,9 +17,9 @@ if (dataFormLengkap($_POST, 'formHitungKlasifikasi')) {
 		"status_badan_hukum" =>  intval($_POST["status_badan_hukum"]),
 		"lama_usaha" =>  intval($_POST["lama_usaha"]),
 		"jml_unit_usaha" =>  intval($_POST["jml_unit_usaha"]),
-		"total_modal" =>  doubleval($_POST["total_modal"]),
-		"perkembangan_modal" =>  doubleval($_POST["perkembangan_modal"]),
-		"selisih_modal" =>  doubleval($_POST["selisih_modal"]),
+		"total_modal" =>  intval($_POST["total_modal"]),
+		"perkembangan_modal" =>  intval($_POST["perkembangan_modal"]),
+		"selisih_modal" =>  intval($_POST["selisih_modal"]),
 	];
 
 	$semuaData = ambilSemuaDataset();
@@ -46,9 +46,9 @@ if (dataFormLengkap($_POST, 'formHitungKlasifikasi')) {
 			'status_badan_hukum' => intval($data['status_badan_hukum']),
 			'lama_usaha' => intval($data['lama_usaha']),
 			'jml_unit_usaha' => intval($data['jml_unit_usaha']),
-			'total_modal' => floatval($data['total_modal']),
-			'perkembangan_modal' => floatval($data['perkembangan_modal']),
-			'selisih_modal' => floatval($data['selisih_modal']),
+			'total_modal' => intval($data['total_modal']),
+			'perkembangan_modal' => intval($data['perkembangan_modal']),
+			'selisih_modal' => intval($data['selisih_modal']),
 			'klasifikasi' => $data['klasifikasi']
 		]));
 
@@ -74,9 +74,16 @@ if (dataFormLengkap($_POST, 'formHitungKlasifikasi')) {
 
 	simpanHasilHitungKedalamSession($dataUntukDihitung, $k, $dataHasilHitungYangTerurut, $hasilHitung);
 
+	// echo "<script>
+	// 		const getUrl = window.location;
+	// 		const baseUrl = getUrl .protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[1];
+	// 		window.location.href = baseUrl + '/hasil_hitung.php';
+	// 	</script>";
+
 	echo "<script>
-			const getUrl = window.location;
-			const baseUrl = getUrl .protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[1];
+		 		alert('Berhasil menyimpan data!')
+				const getUrl = window.location;
+			const baseUrl = getUrl.protocol + '//' + getUrl.host;
 			window.location.href = baseUrl + '/hasil_hitung.php';
 		</script>";
 	return;
@@ -85,7 +92,7 @@ if (dataFormLengkap($_POST, 'formHitungKlasifikasi')) {
 	echo "<script>
 			alert('Maaf, aktivitas ini tidak diizinkan!')
 			const getUrl = window.location;
-			const baseUrl = getUrl .protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[1];
+			const baseUrl = getUrl .protocol + '//' + getUrl.host;
 			window.location.href = baseUrl + '/index.php';
 		</script>";
 	return;

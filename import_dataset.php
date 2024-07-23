@@ -34,7 +34,7 @@ require_once __DIR__ . '/app/init.php';
 		</div>
 
 		<div class="container-fluid my-4">
-			<div class="card">
+			<div class="card-table">
 				<div class="card-title">
 					<h3>Import Dataset</h3>
 				</div>
@@ -60,9 +60,9 @@ require_once __DIR__ . '/app/init.php';
 						<tbody>
 							<tr>
 								<td align="center">1</td>
-								<td>Contoh Kecamatan</td>
-								<td>Contoh Desa</td>
-								<td>Contoh Nama BUMDes</td>
+								<td>kedungwaru</td>
+								<td>ketanon</td>
+								<td>sumbersari</td>
 								<td align="center">1</td>
 								<td align="center">7</td>
 								<td align="center">7</td>
@@ -73,9 +73,9 @@ require_once __DIR__ . '/app/init.php';
 							</tr>
 							<tr>
 								<td align="center">2</td>
-								<td>Contoh Kecamatan 2</td>
-								<td>Contoh Desa 2</td>
-								<td>Contoh Nama BUMDes 2</td>
+								<td>ngunut</td>
+								<td>sumberrejo</td>
+								<td>lestari</td>
 								<td align="center">3</td>
 								<td align="center">4</td>
 								<td align="center">1</td>

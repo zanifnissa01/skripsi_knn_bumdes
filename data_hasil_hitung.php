@@ -40,7 +40,7 @@ $data = ambilSemuaDataHasilHitung();
 		</div>
 
 		<div class="container-fluid my-4">
-			<div class="card">
+			<div class="card-table">
 				<div class="card-title">
 					<h3>Tabel Data Hasil Hitung</h3>
 				</div>
@@ -58,7 +58,7 @@ $data = ambilSemuaDataHasilHitung();
 					      <th class="text-center">Total Modal</th>
 					      <th class="text-center">Perkembangan Modal</th>
 						  <th class="text-center">Selisih Modal</th>
-					      <th class="text-center">Jarak Hasil</th>
+					      <!-- <th class="text-center">Jarak Hasil</th> -->
 					      <th class="text-center">Nilai K</th>
 					      <th class="text-center">Klasifikasi</th>
 					      <th class="text-center">Aksi</th>
@@ -91,7 +91,7 @@ $data = ambilSemuaDataHasilHitung();
 					  			<td align="center"><?= $dt['perkembangan_modal']; ?> </td>
 								<!-- ini td diedit blm ditest boszzz -->
 								<td align="center"><?= $selisih ?> </td>
-					  			<td align="center"><?= $dt['jarak_hasil']; ?></td>
+					  			
 					  			<td align="center"><?= $dt['nilai_k']; ?></td>
 					  			<?php if ($dt['klasifikasi'] == 'pemula') { ?>
 					  				<td align="center">

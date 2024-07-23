@@ -20,6 +20,12 @@ $data = ambilSemuaDataset();
 	<!-- CUSTOM CSS -->
 	<link rel="stylesheet" href="./public/css/style.css">
 	<link rel="stylesheet" href="./public/css/app.css">
+
+	<style>
+	.form-control::placeholder {
+		color:darkgray; /* Warna teks placeholder menjadi semi-transparan */
+	}
+	</style>
 	
 	<title>Dataset | Klasifikasi BUMDes Kab.Tulungagung</title>
 </head>
@@ -42,7 +48,7 @@ $data = ambilSemuaDataset();
 		</div>
 
 		<div class="container-fluid my-4">
-			<div class="card">
+			<div class="card-table">
 				<div class="card-title">
 					<h3>Tabel Dataset</h3>
 				</div>
@@ -60,8 +66,8 @@ $data = ambilSemuaDataset();
 							<th class="text-center">Total Modal</th>
 							<th class="text-center">Perkembangan Modal</th>
 							<th class="text-center">Selisih Modal</th>
-							<th class="text-center">Jarak Hasil</th>
-							<th class="text-center">Nilai K</th>
+							<!-- <th class="text-center">Jarak Hasil</th>
+							<th class="text-center">Nilai K</th> -->
 							<th class="text-center">Klasifikasi</th>
 							<th class="text-center">Aksi</th>
 					    </tr>
@@ -74,26 +80,43 @@ $data = ambilSemuaDataset();
 						<?php } else { ?>
 					  	<?php $i = 1; ?>
 					  	<?php foreach ($data as $dt) : ?>
-							<?php $selisih = $dt['total_modal'] - $dt['perkembangan_modal']; ?>
+							<!-- $selisih = $dt['perkembangan_modal'] - $dt['total_modal']; -->
 					  		<tr>
 					  			<td align="center"><?= $i; ?></td>
+
 					  			<td><?= $dt['kecamatan']; ?></td>
+
 								<td><?= $dt['desa']; ?></td>
+
 								<td><?= $dt['nama_bumdes']; ?></td>
-								<td><?= $dt['status_badan_hukum'] == "Pendaftaran Badan Hukum" ? 0 : (
-											$dt['status_badan_hukum'] == "Nama Terverifikasi" ? 1 : (
-												$dt['status_badan_hukum'] == "Perbaikan Dokumen Badan Hukum" ? 2 : (
-													$dt['status_badan_hukum'] == "Dokumen Badan Hukum Terverifikasi" ? 3 : "Status Tidak Dikenal"))); ?>
+
+								<td>
+								<?php if ($dt['status_badan_hukum'] == 0) {?>									
+									<?= ("Pendaftaran Badan Hukum"); ?>
+								
+								<?php } else if ($dt['status_badan_hukum'] == 1) { ?>
+									<?= ("Nama Terverifikasi"); ?>
+								
+								<?php } else if ($dt['status_badan_hukum'] == 2) { ?>
+									<?= ("Perbaikan Dokumen Badan Hukum"); ?>
+
+								<?php } else if ($dt['status_badan_hukum'] == 3) { ?>
+									<?= ("Dokumen Badan Hukum Terverifikasi"); ?>
+								<?php } ?>
 								</td>
+
 					  			<td align="center"><?= $dt['lama_usaha']; ?> Tahun</td>
+
 					  			<td align="center"><?= $dt['jml_unit_usaha']; ?> Unit</td>
+
 					  			<td align="center"><?= $dt['total_modal']; ?> </td>
+
 					  			<td align="center"><?= $dt['perkembangan_modal']; ?> </td>
+
 								<!-- ini td diedit blm ditest boszzz -->
-								<td align="center"><?= $selisih ?> </td>
-					  			<td align="center"><?= $dt['jarak_hasil']; ?></td>
-					  			<td align="center"><?= $dt['nilai_k']; ?></td>
-					  			<?php if ($dt['klasifikasi'] == 'pemula') { ?>
+								<td align="center"><?= $dt['selisih_modal'] ?> </td>
+
+								<?php if ($dt['klasifikasi'] == 'pemula') { ?>
 					  				<td align="center">
 					  					<span class="badge badge-danger"><?= ucfirst($dt['klasifikasi']); ?></span>
 					  				</td>
@@ -161,26 +184,26 @@ $data = ambilSemuaDataset();
 					</div>
 					<div class="form-group">
 					   <label for="lama_usaha">Lama Usaha <small>(Tahun)</small></label>
-					   <input type="number" min="0" name="lama_usaha" class="form-control" id="lama_usaha" required>
+					   <input type="number" min="0" name="lama_usaha" placeholder="5"  class="form-control" id="lama_usaha" required>
 					</div>
 					<div class="form-group">
 					   <label for="jml_unit_usaha">Jumlah Unit Usaha <small>(Unit)</small></label>
-					   <input type="number" step="any" min="0" name="jml_unit_usaha" class="form-control" id="jml_unit_usaha" required>
+					   <input type="number" step="any" min="0" name="jml_unit_usaha" placeholder="3"  class="form-control" id="jml_unit_usaha" required>
 					</div>
 				</div>
 				<div class="row row-cols-3">
 					<div class="form-group">
 					   <label for="total_modal">Total Modal </label>
-					   <input type="number" step="any" min="0" name="total_modal" class="form-control" id="total_modal" required>
+					   <input type="number" step="any" min="0" name="total_modal" placeholder="10.000.000"  class="form-control" id="total_modal" required>
 					</div>
 					<div class="form-group">
 					   <label for="perkembangan_modal">Perkembangan Modal </label>
-					   <input type="number" step="any" min="0" name="perkembangan_modal" class="form-control" id="perkembangan_modal" required>
+					   <input type="number" step="any" min="0" name="perkembangan_modal" placeholder="13.000.000"  class="form-control" id="perkembangan_modal" required>
 					</div>
 					<div class="form-group">
 					<div class="form-group">
 					   <label for="selisih_modal">Selisih Modal </label>
-					   <input type="number" step="any" min="0" name="selisih_modal" class="form-control" id="selisih_modal" required>
+					   <input type="number" step="any" min="0" name="selisih_modal" placeholder="3.000.000"  class="form-control" id="selisih_modal" required>
 					</div>
 					<div class="form-group">
 					   <label for="klasifikasi">Klasifikasi</label>

@@ -25,7 +25,7 @@ class DataSet {
     protected $tetanggaTerdekat;
 
     /**
-     * @var string
+     * @var int
      */
     protected $hasilHitung;
 
@@ -88,7 +88,7 @@ class DataSet {
             $totalKalkulasiJarakDataUjiDanDataSample = [];
 
             foreach ($this->schema->getParameters() as $parameter) {
-                $jarak = floatval($dataUji->get($parameter)) - floatval($dataSample->get($parameter));
+                $jarak = intval($dataUji->get($parameter)) - intval($dataSample->get($parameter));
                 $totalKalkulasiJarakDataUjiDanDataSample[] = $jarak;
             }
 
@@ -97,7 +97,7 @@ class DataSet {
                 $totalJarakEuclidean += pow($jarak, 2);
             }
 
-    		$totalJarakEuclidean = doubleval(sqrt($totalJarakEuclidean));
+    		$totalJarakEuclidean = intval(sqrt($totalJarakEuclidean));
 
     		$dataUji->setJarakHasil($totalJarakEuclidean);
     	}

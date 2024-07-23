@@ -14,8 +14,29 @@ if ($conn->connect_error) {
 function tambahData($data, $namaTabel) {
 	global $conn;
 
-	$query = "INSERT INTO `".$namaTabel."` (kecamatan, desa, nama_bumdes, status_badan_hukum, lama_usaha, jml_unit_usaha, total_modal, perkembangan_modal, selisih_modal, klasifikasi) VALUES ('".$data[0]."', ".$data[1].", ".$data[2].", ".$data[3].", ".$data[4].", ".$data[5].", '".$data[6]."', '".$data[7]."', '".$data[8]."', '".$data[9]."', '".$data[10]."')";
-
+	$query = "INSERT INTO `".$namaTabel."` (
+	kecamatan, 
+	desa, 
+	nama_bumdes, 
+	status_badan_hukum, 
+	lama_usaha, 
+	jml_unit_usaha, 
+	total_modal, 
+	perkembangan_modal, 
+	selisih_modal, 
+	klasifikasi) 
+	VALUES (
+	'".$data[0]."',
+	'".$data[1]."',
+	'".$data[2]."',
+	".$data[3].",
+	".$data[4].",
+	".$data[5].",
+	".$data[6].",
+	".$data[7].",
+	".$data[8].",
+	'".$data[9]."')";
+	// echo $query;
 	return $conn->query($query) === TRUE ? true : $conn->error;
 }
 

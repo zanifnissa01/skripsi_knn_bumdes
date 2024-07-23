@@ -16,22 +16,28 @@ if ( adaHasilHitung() ) {
 
 	if ( simpanDataHasilHitung($dataYangDiuji, $klasifikasi, $jarakHasil, $nilaiK) ) {
 
+		// echo "<script>
+		// 		alert('Berhasil menyimpan data!')
+		// 		const getUrl = window.location;
+		// 		const baseUrl = getUrl .protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[1];
+		// 		window.location.href = baseUrl + '/data_hasil_hitung.php';
+		// 	</script>";
 		echo "<script>
-				alert('Berhasil menyimpan data!')
+		 		alert('Berhasil menyimpan data!')
 				const getUrl = window.location;
-				const baseUrl = getUrl .protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[1];
+				const baseUrl = getUrl.protocol + '//' + getUrl.host;
 				window.location.href = baseUrl + '/data_hasil_hitung.php';
-			</script>";
+				</script>";
 		return;
 
 	} else {
 
 		echo "<script>
-				alert('Gagal menyimpan data!')
+		 		alert('Berhasil menyimpan data!')
 				const getUrl = window.location;
-				const baseUrl = getUrl .protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[1];
+				const baseUrl = getUrl.protocol + '//' + getUrl.host;
 				window.location.href = baseUrl + '/index.php';
-			</script>";
+				</script>";;
 		return;
 
 	}

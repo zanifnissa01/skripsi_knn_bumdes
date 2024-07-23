@@ -9,7 +9,7 @@ class Data {
     private $data = [];
 
     /**
-     * @var float
+     * @var int
      */
     private $jarakHasil;
 
@@ -22,7 +22,7 @@ class Data {
 	function __construct(array $data)
 	{
 		$this->data = $data;
-		$this->jarakHasil = floatval(1.0);
+		$this->jarakHasil = intval(1.0);
 	}
 
 	/**
@@ -69,7 +69,7 @@ class Data {
     }
 
     /**
-     * @return float
+     * @return int
      */
     public function getJarakHasil()
     {

@@ -28,13 +28,18 @@ if ($data == null || empty($data)) {
 	<!-- CUSTOM CSS -->
 	<link rel="stylesheet" href="./public/css/style.css">
 	<link rel="stylesheet" href="./public/css/app.css">
+	<style>
+	.form-control::placeholder {
+		color:darkgray; /* Warna teks placeholder menjadi semi-transparan */
+	}
+	</style>
 	
 	<title>Home | Klasifikasi BUMDes Kab.Tulungagung</title>
 </head>
 <body>
 	<nav class="nav mb-4">
 		<div class="container">
-			<h1>Klasifikasi BUMDes Kab.Tulungagung</h1>
+			<h1>Klasifikasi BUMDes Kab.Tulungagung</h1>			
 		</div>
 	</nav>
 
@@ -55,15 +60,15 @@ if ($data == null || empty($data)) {
 					<form action="./app/proses/hitung.php" method="POST">
 				   	<div class="form-group mb-3">
 						   <label for="kecamatan">Kecamatan</label>
-						   <input type="text" name="kecamatan" class="form-control" placeholder="Boyolangu" id="kecamatan" required>
+						   <input type="text" name="kecamatan" class="form-control" id="kecamatan" required>
 						</div>	
 						<div class="form-group mb-3">
 						   <label for="desa">Desa</label>
-						   <input type="text" name="desa" class="form-control" placeholder="Wajak Kidul" id="desa" required>
+						   <input type="text" name="desa" class="form-control" id="desa" required>
 						</div>	
 						<div class="form-group mb-3">
 						   <label for="nama_bumdes">Nama BUMDes</label>
-						   <input type="text" name="nama_bumdes" class="form-control" placeholder="Sinar Harapan" id="nama_bumdes" required>
+						   <input type="text" name="nama_bumdes" class="form-control" id="nama_bumdes" required>
 						</div>					
 						<div class="row row-cols-3">
 							<div class="form-group">
@@ -91,7 +96,7 @@ if ($data == null || empty($data)) {
 							</div>
 							<div class="form-group">
 							   <label for="perkembangan_modal">Perkembangan Modal </label>
-							   <input type="number" step="any" min="0" name="perkembangan_modal" class="form-control" id="perkembangan_modal" required>
+							   <input type="number" step="any" min="0" name="15.000.000" class="form-control" id="perkembangan_modal" required>
 							</div>
 						</div>
 						<div class="form-group">
@@ -102,7 +107,7 @@ if ($data == null || empty($data)) {
 						<div class="row row-cols-2">
 							<div class="form-group">
 							   <label for="tetanggaTerdekat">Tetangga Terdekat:</label>
-							   <input type="number" min="0" name="tetangga_terdekat" class="form-control" id="tetanggaTerdekat" required>
+							   <input type="number" min="0" name="tetangga_terdekat" class="form-control" placeholder="2" id="tetanggaTerdekat" required>
 							   <small id="passwordHelpBlock" class="form-text text-muted">
 								  Disarankan untuk tidak melebihi setengah dari total dataset (yaitu <?= $n; ?>) dan sebaiknya ganjil.
 								</small>

@@ -18,7 +18,7 @@ if ( adaHasilHitung() ) {
 	echo "<script>
 			alert('Maaf, aktivitas ini tidak diizinkan!')
 			const getUrl = window.location;
-			const baseUrl = getUrl .protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[1];
+			const baseUrl = getUrl .protocol + '//' + getUrl.host;
 			window.location.href = baseUrl + '/index.php';
 		</script>";
 
