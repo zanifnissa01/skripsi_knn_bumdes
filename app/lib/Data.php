@@ -3,29 +3,28 @@
 namespace Rllyhz\Dev\KNN;
 
 class Data {
-	/**
+    /**
      * @var array
      */
     private $data = [];
 
     /**
-     * @var int
+     * @var float
      */
     private $jarakHasil;
 
-
-   /**
+    /**
      * Constructor.
      *
      * @param array $data
      */
-	function __construct(array $data)
-	{
-		$this->data = $data;
-		$this->jarakHasil = intval(1.0);
-	}
+    function __construct(array $data)
+    {
+        $this->data = $data;
+        $this->jarakHasil = 1.0; // Menggunakan float
+    }
 
-	/**
+    /**
      * @param array $data
      * @return $this
      */
@@ -45,20 +44,16 @@ class Data {
     }
 
     /**
-     * @param $namaParameter
-     * @return null
+     * @param string $namaParameter
+     * @return mixed|null
      */
     public function get($namaParameter)
     {
-        if (!isset($this->data[$namaParameter])) {
-            return null;
-        }
-
-        return $this->data[$namaParameter];
+        return $this->data[$namaParameter] ?? null;
     }
 
     /**
-     * @param $jarakHasil
+     * @param float $jarakHasil
      * @return $this
      */
     public function setJarakHasil(float $jarakHasil)
@@ -69,7 +64,7 @@ class Data {
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getJarakHasil()
     {

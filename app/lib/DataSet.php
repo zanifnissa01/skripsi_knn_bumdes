@@ -4,28 +4,28 @@
 namespace Rllyhz\Dev\KNN;
 
 class DataSet {
-	/**
-     * @var dataset[]
+    /**
+     * @var Data[]
      */
     protected $dataset;
 
     /**
-     * @var n
+     * @var int
      */
     protected $n;
 
     /**
-     * @var dataHasilHitung[]
+     * @var Data[]
      */
     protected $dataHasilHitung;
 
     /**
-     * @var tetanggaTerdekat[]
+     * @var Data[]
      */
     protected $tetanggaTerdekat;
 
     /**
-     * @var int
+     * @var array
      */
     protected $hasilHitung;
 
@@ -54,13 +54,12 @@ class DataSet {
     }
 
     /**
-     * @return $dataset
+     * @return Data[]
      */
     public function getDataset()
     {
         return $this->dataset;
     }
-
 
     /**
      * @param Data $data
@@ -68,23 +67,21 @@ class DataSet {
      */
     public function tambah(Data $data)
     {
-    	$this->dataset[] = $data;
-
-    	return $this;
+        $this->dataset[] = $data;
+        return $this;
     }
 
     /**
-     * @param  Data   $data
-     * @param  string $parameter
-     * @return mixed
+     * @param  Data   $dataSample
+     * @return array
      */
     public function hitung(Data $dataSample)
     {
-    	// $n => Banyak data
-    	$this->n = count($this->dataset);
+        // $n => Banyak data
+        $this->n = count($this->dataset);
         $this->dataHasilHitung = $this->dataset;
 
-    	foreach ($this->dataHasilHitung as $dataUji) {
+        foreach ($this->dataHasilHitung as $dataUji) {
             $totalKalkulasiJarakDataUjiDanDataSample = [];
 
             foreach ($this->schema->getParameters() as $parameter) {
@@ -97,13 +94,12 @@ class DataSet {
                 $totalJarakEuclidean += pow($jarak, 2);
             }
 
-    		$totalJarakEuclidean = intval(sqrt($totalJarakEuclidean));
+            $totalJarakEuclidean = sqrt($totalJarakEuclidean); // Corrected calculation
 
-    		$dataUji->setJarakHasil($totalJarakEuclidean);
-    	}
+            $dataUji->setJarakHasil($totalJarakEuclidean);
+        }
 
         $this->urutkanData($this->dataHasilHitung);
-
         $this->cariTetanggaTerdekat();
 
         return [
@@ -114,21 +110,17 @@ class DataSet {
     }
 
     /**
-     * @param  Data[]   $data
-     * @return Dataset $this
+     * @param  Data[] $data
+     * @return $this
      */
     public function setDataHasilHitung(array $data)
     {
         $this->dataHasilHitung = $data;
-
         return $this;
     }
 
-
     /**
      * Cari tetangga k-terdekat
-     *
-     * @param Data[] $data
      */
     public function cariTetanggaTerdekat()
     {
@@ -137,7 +129,7 @@ class DataSet {
             $this->hasilHitung = [
                 $this->schema->getParameterKlasifikasi() => $klasifikasi,
                 'jarak_hasil' => $jarak,
-                'nilai_k' =>$this->k
+                'nilai_k' => $this->k
             ];
         });
     }
@@ -146,21 +138,21 @@ class DataSet {
      * Cari kriteria terbanyak
      *
      * @param Data[] $data
-     * @param Function $callback
+     * @param callable $callback
      */
-    public function cariKlasifikasiTerbanyak(array $data, $callback)
+    public function cariKlasifikasiTerbanyak(array $data, callable $callback)
     {
         $klasifikasiArray = [];
         $parameterKlasifikasi = $this->schema->getParameterKlasifikasi();
 
-
-        foreach ($data as $key => $value) {
-            if (isset($klasifikasiArray[$value->get($parameterKlasifikasi)])) {
-                $jumlah = $klasifikasiArray[$value->get($parameterKlasifikasi)][0];
-                $jarak = $klasifikasiArray[$value->get($parameterKlasifikasi)][1];
-                $klasifikasiArray[$value->get($parameterKlasifikasi)] = [++$jumlah, $jarak];
+        foreach ($data as $value) {
+            $klasifikasi = $value->get($parameterKlasifikasi);
+            if (isset($klasifikasiArray[$klasifikasi])) {
+                $jumlah = $klasifikasiArray[$klasifikasi][0];
+                $jarak = $klasifikasiArray[$klasifikasi][1];
+                $klasifikasiArray[$klasifikasi] = [$jumlah + 1, $jarak];
             } else {
-                $klasifikasiArray[$value->get($parameterKlasifikasi)] = [1, $value->getJarakHasil()];
+                $klasifikasiArray[$klasifikasi] = [1, $value->getJarakHasil()];
             }
         }
 
@@ -208,7 +200,7 @@ class DataSet {
         usort(
             $data,
             function (Data $a, Data $b) {
-                return $a->getJarakHasil() > $b->getJarakHasil();
+                return $a->getJarakHasil() <=> $b->getJarakHasil();
             }
         );
     }

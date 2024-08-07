@@ -1,54 +1,29 @@
-<?php 
+<?php
 
 require_once __DIR__ . '/../init.php';
+require_once __DIR__ . '../../helpers/database.php';
 
+if (adaHasilHitung()) {
+    $data = ambilSemuaHasilDariSession();
+    $dataYangDiuji = $data["data_yang_diuji"];
+    $nilaiK = $data["nilai_k"];
+    $klasifikasi = $data["klasifikasi_yang_terpilih"];
 
-if ( adaHasilHitung() ) {
+    // Bersihkan sesi hasil hitung
+    bersihkanHasilHitungDariSession();
 
-	$data = ambilSemuaHasilDariSession();
-	$dataYangDiuji = $data["data_yang_diuji"];
-	$nilaiK = $data["nilai_k"];
-	$klasifikasi = $data["klasifikasi_yang_terpilih"];
-	$jarakHasil = $data["jarak_hasil"];
-
-	bersihkanHasilHitungDariSession();
-
-
-	if ( simpanDataHasilHitung($dataYangDiuji, $klasifikasi, $jarakHasil, $nilaiK) ) {
-
-		// echo "<script>
-		// 		alert('Berhasil menyimpan data!')
-		// 		const getUrl = window.location;
-		// 		const baseUrl = getUrl .protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[1];
-		// 		window.location.href = baseUrl + '/data_hasil_hitung.php';
-		// 	</script>";
-		echo "<script>
-		 		alert('Berhasil menyimpan data!')
-				const getUrl = window.location;
-				const baseUrl = getUrl.protocol + '//' + getUrl.host;
-				window.location.href = baseUrl + '/data_hasil_hitung.php';
-				</script>";
-		return;
-
-	} else {
-
-		echo "<script>
-		 		alert('Berhasil menyimpan data!')
-				const getUrl = window.location;
-				const baseUrl = getUrl.protocol + '//' + getUrl.host;
-				window.location.href = baseUrl + '/index.php';
-				</script>";;
-		return;
-
-	}
-
+    // Simpan data hasil hitung ke database
+    if (simpanDataHasilHitung($dataYangDiuji, $klasifikasi, $nilaiK)) {
+        // Redirect ke halaman data_hasil_hitung.php setelah berhasil menyimpan data
+        header('Location: /data_hasil_hitung.php');
+        exit();
+    } else {
+        // Redirect ke halaman index.php jika gagal menyimpan data
+        header('Location: /index.php');
+        exit();
+    }
 } else {
-
-	echo "<script>
-			alert('Maaf, aktivitas ini tidak diizinkan!')
-			const getUrl = window.location;
-			const baseUrl = getUrl .protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[1];
-			window.location.href = baseUrl + '/index.php';
-		</script>";
-	return;
+    // Redirect ke halaman index.php jika tidak ada hasil hitung
+    header('Location: /index.php');
+    exit();
 }

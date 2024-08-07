@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Rllyhz\Dev\KNN;
 
 class Schema
@@ -13,13 +12,13 @@ class Schema
     /**
      * @var string
      */
-    protected $parameterKlasifikasi = [];
+    protected $parameterKlasifikasi;
 
     /**
      * @param string $parameter
      * @return $this
      */
-    public function tambahParameter($parameter)
+    public function tambahParameter(string $parameter)
     {
         $this->parameters[] = $parameter;
 

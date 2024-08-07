@@ -1,41 +1,66 @@
 <?php
 
 function dataFormLengkap(array $data, string $formAsal) {
-	if ($formAsal === 'formHitungKlasifikasi') {
+	$requiredFields = [];
 
-		if ( isset($data["kecamatan"]) && isset($data["desa"]) && isset($data["nama_bumdes"]) && isset($data["status_badan_hukum"]) && isset($data["lama_usaha"]) && isset($data["jml_unit_usaha"]) && isset($data["total_modal"]) && isset($data["perkembangan_modal"]) && isset($data["selisih_modal"]) && isset($data["tetangga_terdekat"]) )
-		{
-			return true;
-		} 
-
+	switch ($formAsal) {
+			case 'formHitungKlasifikasi':
+					$requiredFields = [
+							'kecamatan',
+							'desa',
+							'nama_bumdes',
+							'status_badan_hukum',
+							'lama_usaha',
+							'jml_unit_usaha',
+							'total_modal',
+							'perkembangan_modal',
+							'selisih_modal',
+							'tetangga_terdekat'
+					];
+					break;
+			case 'formEditDataset':
+					$requiredFields = [
+							'kecamatan',
+							'desa',
+							'nama_bumdes',
+							'status_badan_hukum',
+							'lama_usaha',
+							'jml_unit_usaha',
+							'total_modal',
+							'perkembangan_modal',
+							'selisih_modal',
+							'klasifikasi',
+							'id'
+					];
+					break;
+			case 'formTambahDataset':
+					$requiredFields = [
+							'kecamatan',
+							'desa',
+							'nama_bumdes',
+							'status_badan_hukum',
+							'lama_usaha',
+							'jml_unit_usaha',
+							'total_modal',
+							'perkembangan_modal',
+							'selisih_modal',
+							'klasifikasi'
+					];
+					break;
+			case 'formHapusDataset':
+					$requiredFields = ['id'];
+					break;
+			default:
+					return false;
 	}
 
-	if ($formAsal === 'formEditDataset') {
-
-		if ( isset($data["kecamatan"]) && isset($data["desa"]) && isset($data["nama_bumdes"]) && isset($data["status_badan_hukum"]) && isset($data["lama_usaha"]) && isset($data["jml_unit_usaha"]) && isset($data["total_modal"]) && isset($data["perkembangan_modal"]) && isset($data["selisih_modal"]) && isset($data["klasifikasi"]) && isset($data["id"]) )
-		{
-			return true;
-		} 
-
+	foreach ($requiredFields as $field) {
+			if (!isset($data[$field]) || empty($data[$field])) {
+					// Optional: Debugging
+					// echo "Field missing or empty: $field<br>";
+					return false;
+			}
 	}
 
-	if ($formAsal === 'formTambahDataset') {
-
-		if ( isset($data["kecamatan"]) && isset($data["desa"]) && isset($data["nama_bumdes"]) && isset($data["status_badan_hukum"]) && isset($data["lama_usaha"]) && isset($data["jml_unit_usaha"]) && isset($data["total_modal"]) && isset($data["perkembangan_modal"]) && isset($data["selisih_modal"]) && isset($data["klasifikasi"]) )
-		{
-			return true;
-		} 
-
-	}
-
-	if ($formAsal === 'formHapusDataset') {
-
-		if ( isset($data["id"]) )
-		{
-			return true;
-		} 
-
-	}
-
-	return false;
+	return true;
 }
