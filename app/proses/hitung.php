@@ -1,100 +1,132 @@
 <?php
-
 require_once __DIR__ . '/../init.php';
+require_once __DIR__ . '../../helpers/database.php';
 
-use \Rllyhz\Dev\KNN\Schema;
-use \Rllyhz\Dev\KNN\DataSet;
-use \Rllyhz\Dev\KNN\Data;
+// Mulai output buffering untuk menghindari "headers already sent" error
+ob_start();
 
-if (dataFormLengkap($_POST, 'formHitungKlasifikasi')) {
+try {
+    // Ambil data dari form
+    $kecamatan = $_POST['kecamatan'];
+    $desa = $_POST['desa'];
+    $nama_bumdes = $_POST['nama_bumdes'];
+    $status_badan_hukum = intval($_POST['status_badan_hukum']);
+    $lama_usaha = intval($_POST['lama_usaha']);
+    $jml_unit_usaha = intval($_POST['jml_unit_usaha']);
+    $total_modal = floatval($_POST['total_modal']); // Menggunakan floatval untuk keakuratan
+    $perkembangan_modal = floatval($_POST['perkembangan_modal']); // Menggunakan floatval untuk keakuratan
 
-	$k = intval($_POST["tetangga_terdekat"]);
+    // Perhitungan selisih modal
+    $selisih_modal = $total_modal - $perkembangan_modal;
 
-	$dataUntukDihitung = [
-		"kecamatan" =>  $_POST["kecamatan"],
-		"desa" =>  $_POST["desa"],
-		"nama_bumdes" =>  $_POST["nama_bumdes"],
-		"status_badan_hukum" =>  intval($_POST["status_badan_hukum"]),
-		"lama_usaha" =>  intval($_POST["lama_usaha"]),
-		"jml_unit_usaha" =>  intval($_POST["jml_unit_usaha"]),
-		"total_modal" =>  intval($_POST["total_modal"]),
-		"perkembangan_modal" =>  intval($_POST["perkembangan_modal"]),
-		"selisih_modal" =>  intval($_POST["selisih_modal"]),
-	];
+    $selisih_modal = abs($selisih_modal);
 
-	$semuaData = ambilSemuaDataset();
+    // Debug output untuk memastikan nilai sudah benar sebelum disimpan
+    echo "Total Modal: $total_modal, Perkembangan Modal: $perkembangan_modal, Selisih Modal: $selisih_modal";
 
-	$schema = new Schema();
-	$schema
-		->tambahParameter('status_badan_hukum')
-		->tambahParameter('lama_usaha')
-		->tambahParameter('jml_unit_usaha')
-		->tambahParameter('total_modal')
-		->tambahParameter('perkembangan_modal')
-		->tambahParameter('selisih_modal')
-		->setParameterKlasifikasi('klasifikasi');
+    // Ambil nilai K dari form
+    $nilai_k = intval($_POST['tetangga_terdekat']);
 
-	$dataset = new DataSet($schema, $k);
+    // Koneksi ke database dan ambil data training
+    $conn = koneksiDatabase();
+    $result = $conn->query("SELECT * FROM dataset");
+    $dataTraining = $result->fetch_all(MYSQLI_ASSOC);
 
+    // Normalisasi data
+    function normalisasi($value, $min, $max) {
+        return ($max - $min) == 0 ? 0 : ($value - $min) / ($max - $min);
+    }
 
-	foreach ($semuaData as $data) {
+    // Ambil nilai minimum dan maksimum dari data training untuk normalisasi
+    $minMax = [
+        'lama_usaha' => ['min' => PHP_INT_MAX, 'max' => PHP_INT_MIN],
+        'status_badan_hukum' => ['min' => PHP_INT_MAX, 'max' => PHP_INT_MIN],
+        'jml_unit_usaha' => ['min' => PHP_INT_MAX, 'max' => PHP_INT_MIN],
+        'total_modal' => ['min' => PHP_INT_MAX, 'max' => PHP_INT_MIN],
+        'perkembangan_modal' => ['min' => PHP_INT_MAX, 'max' => PHP_INT_MIN],
+        'selisih_modal' => ['min' => PHP_INT_MAX, 'max' => PHP_INT_MIN],
+    ];
 
-		$dataset->tambah(new Data([
-			'kecamatan' => $data['kecamatan'],
-			'desa' => $data['desa'],
-			'nama_bumdes' => $data['nama_bumdes'],
-			'status_badan_hukum' => intval($data['status_badan_hukum']),
-			'lama_usaha' => intval($data['lama_usaha']),
-			'jml_unit_usaha' => intval($data['jml_unit_usaha']),
-			'total_modal' => intval($data['total_modal']),
-			'perkembangan_modal' => intval($data['perkembangan_modal']),
-			'selisih_modal' => intval($data['selisih_modal']),
-			'klasifikasi' => $data['klasifikasi']
-		]));
+    // Cari nilai min dan max untuk normalisasi
+    foreach ($dataTraining as $data) {
+        foreach ($minMax as $key => &$minMaxValues) {
+            $minMaxValues['min'] = min($minMaxValues['min'], $data[$key]);
+            $minMaxValues['max'] = max($minMaxValues['max'], $data[$key]);
+        }
+    }
 
-	}
+    // Normalisasi data uji
+    $dataUjiNormal = [
+        'lama_usaha' => normalisasi($lama_usaha, $minMax['lama_usaha']['min'], $minMax['lama_usaha']['max']),
+        'status_badan_hukum' => normalisasi($status_badan_hukum, $minMax['status_badan_hukum']['min'], $minMax['status_badan_hukum']['max']),
+        'jml_unit_usaha' => normalisasi($jml_unit_usaha, $minMax['jml_unit_usaha']['min'], $minMax['jml_unit_usaha']['max']),
+        'total_modal' => normalisasi($total_modal, $minMax['total_modal']['min'], $minMax['total_modal']['max']),
+        'perkembangan_modal' => normalisasi($perkembangan_modal, $minMax['perkembangan_modal']['min'], $minMax['perkembangan_modal']['max']),
+        'selisih_modal' => normalisasi($selisih_modal, $minMax['selisih_modal']['min'], $minMax['selisih_modal']['max']),
+    ];
 
-	$hasil = $dataset->hitung(
-		new Data([
-			'kecamatan' => $dataUntukDihitung["kecamatan"],
-			'desa' => $dataUntukDihitung["desa"],
-			'nama_bumdes' => $dataUntukDihitung["nama_bumdes"],
-			'status_badan_hukum' => $dataUntukDihitung["status_badan_hukum"],
-			'lama_usaha' => $dataUntukDihitung["lama_usaha"],
-			'jml_unit_usaha' => $dataUntukDihitung["jml_unit_usaha"],
-			'total_modal' => $dataUntukDihitung["total_modal"],
-			'perkembangan_modal' => $dataUntukDihitung["perkembangan_modal"],
-			'selisih_modal' => $dataUntukDihitung["selisih_modal"]
-		])
-	);
+    // Normalisasi data training dan hitung jarak Euclidean
+    $dataHasilHitung = [];
+    foreach ($dataTraining as $data) {
+        $dataTrainingNormal = [
+            'lama_usaha' => normalisasi($data['lama_usaha'], $minMax['lama_usaha']['min'], $minMax['lama_usaha']['max']),
+            'status_badan_hukum' => normalisasi($data['status_badan_hukum'], $minMax['status_badan_hukum']['min'], $minMax['status_badan_hukum']['max']),
+            'jml_unit_usaha' => normalisasi($data['jml_unit_usaha'], $minMax['jml_unit_usaha']['min'], $minMax['jml_unit_usaha']['max']),
+            'total_modal' => normalisasi($data['total_modal'], $minMax['total_modal']['min'], $minMax['total_modal']['max']),
+            'perkembangan_modal' => normalisasi($data['perkembangan_modal'], $minMax['perkembangan_modal']['min'], $minMax['perkembangan_modal']['max']),
+            'selisih_modal' => normalisasi($data['selisih_modal'], $minMax['selisih_modal']['min'], $minMax['selisih_modal']['max']),
+        ];
 
-	$hasilHitung = $hasil["hasil_hitung"];
-	$tetanggaTerdekat = $hasil["tetangga_terdekat"];
-	$dataHasilHitungYangTerurut = $hasil["data_hasil_hitung_yang_terurut"];
+        // Hitung jarak Euclidean
+        $jarak = sqrt(
+            pow($dataUjiNormal['lama_usaha'] - $dataTrainingNormal['lama_usaha'], 2) +
+            pow($dataUjiNormal['status_badan_hukum'] - $dataTrainingNormal['status_badan_hukum'], 2) +
+            pow($dataUjiNormal['jml_unit_usaha'] - $dataTrainingNormal['jml_unit_usaha'], 2) +
+            pow($dataUjiNormal['total_modal'] - $dataTrainingNormal['total_modal'], 2) +
+            pow($dataUjiNormal['perkembangan_modal'] - $dataTrainingNormal['perkembangan_modal'], 2) +
+            pow($dataUjiNormal['selisih_modal'] - $dataTrainingNormal['selisih_modal'], 2)
+        );
 
-	simpanHasilHitungKedalamSession($dataUntukDihitung, $k, $dataHasilHitungYangTerurut, $hasilHitung);
+        $dataHasilHitung[] = array_merge($data, ['jarak' => $jarak]);
+    }
 
-	// echo "<script>
-	// 		const getUrl = window.location;
-	// 		const baseUrl = getUrl .protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[1];
-	// 		window.location.href = baseUrl + '/hasil_hitung.php';
-	// 	</script>";
+    // Urutkan hasil berdasarkan jarak terkecil
+    usort($dataHasilHitung, function($a, $b) {
+        return $a['jarak'] <=> $b['jarak'];
+    });
 
-	echo "<script>
-		 		alert('Berhasil menyimpan data!')
-				const getUrl = window.location;
-			const baseUrl = getUrl.protocol + '//' + getUrl.host;
-			window.location.href = baseUrl + '/hasil_hitung.php';
-		</script>";
-	return;
+    // Ambil K tetangga terdekat
+    $dataTerdekat = array_slice($dataHasilHitung, 0, $nilai_k);
 
-} else {
-	echo "<script>
-			alert('Maaf, aktivitas ini tidak diizinkan!')
-			const getUrl = window.location;
-			const baseUrl = getUrl .protocol + '//' + getUrl.host;
-			window.location.href = baseUrl + '/index.php';
-		</script>";
-	return;
+    // Tentukan klasifikasi berdasarkan mayoritas dari K tetangga terdekat
+    $klasifikasiCounts = array_count_values(array_column($dataTerdekat, 'klasifikasi'));
+    $klasifikasi = array_search(max($klasifikasiCounts), $klasifikasiCounts);
+
+    // Simpan hasil ke sesi
+    simpanHasilHitungKedalamSession([
+        'kecamatan' => $kecamatan,
+        'desa' => $desa,
+        'nama_bumdes' => $nama_bumdes,
+        'status_badan_hukum' => $status_badan_hukum,
+        'lama_usaha' => $lama_usaha,
+        'jml_unit_usaha' => $jml_unit_usaha,
+        'total_modal' => $total_modal,
+        'perkembangan_modal' => $perkembangan_modal,
+        'selisih_modal' => $selisih_modal,
+    ], $nilai_k, $dataTerdekat, ['klasifikasi' => $klasifikasi]);
+
+    // Redirect ke halaman hasil_hitung.php
+    header('Location: /hasil_hitung.php');
+    exit();
+
+} catch (Exception $e) {
+    // Tangani pengecualian dan tampilkan pesan kesalahan
+    echo "<script>
+            alert('Terjadi kesalahan: " . $e->getMessage() . "');
+            window.location.href = '/index.php';
+          </script>";
+    exit();
 }
 
+// Akhiri output buffering
+ob_end_flush();

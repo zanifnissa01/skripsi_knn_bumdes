@@ -14,13 +14,13 @@ $data = ambilSemuaDataHasilHitung();
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- FONTS -->
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> 
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 	<!-- FONT AWESOME ICON -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 	<!-- CUSTOM CSS -->
 	<link rel="stylesheet" href="./public/css/style.css">
 	<link rel="stylesheet" href="./public/css/app.css">
-	
+
 	<title>Data Hasil Hitung | Klasifikasi BUMDes Kab.Tulungagung</title>
 </head>
 <body>
@@ -30,9 +30,9 @@ $data = ambilSemuaDataHasilHitung();
 			<h1>Klasifikasi BUMDes Kab.Tulungagaung</h1>
 		</div>
 	</nav>
-	
+
 	<div class="container">
-		
+
 		<div class="button-group">
 			<a href="index.php" class="btn btn-secondary-outline btn-sm link">Home</a>
 			<a href="dataset.php" class="btn btn-secondary-outline btn-sm link">Dataset</a>
@@ -58,7 +58,6 @@ $data = ambilSemuaDataHasilHitung();
 					      <th class="text-center">Total Modal</th>
 					      <th class="text-center">Perkembangan Modal</th>
 						  <th class="text-center">Selisih Modal</th>
-					      <!-- <th class="text-center">Jarak Hasil</th> -->
 					      <th class="text-center">Nilai K</th>
 					      <th class="text-center">Klasifikasi</th>
 					      <th class="text-center">Aksi</th>
@@ -67,43 +66,41 @@ $data = ambilSemuaDataHasilHitung();
 						<tbody>
 						<?php if ( !isset($data) || $data === null || empty($data) ) { ?>
 							<tr>
-								<th colspan="11" style="padding: 1rem;">Belum ada data hitung</th>
+								<th colspan="13" style="padding: 1rem;">Belum ada data hitung</th>
 							</tr>
 						<?php } else { ?>
 					  	<?php $i = 1; ?>
-						
+
 					  	<?php foreach ($data as $dt) : ?>
-							<!-- rencana selisihnya pake ini boszz -->
-							<?php $selisih = $dt['total_modal'] - $dt['perkembangan_modal']; ?>
 					  		<tr>
 					  			<td align="center"><?= $i; ?></td>
-					  			<td><?= $dt['kecamatan']; ?></td>
-								<td><?= $dt['desa']; ?></td>
-								<td><?= $dt['nama_bumdes']; ?></td>
-								<td><?= $dt['status_badan_hukum'] == "Pendaftaran Badan Hukum" ? 0 : (
-											$dt['status_badan_hukum'] == "Nama Terverifikasi" ? 1 : (
-												$dt['status_badan_hukum'] == "Perbaikan Dokumen Badan Hukum" ? 2 : (
-													$dt['status_badan_hukum'] == "Dokumen Badan Hukum Terverifikasi" ? 3 : "Status Tidak Dikenal"))); ?>
+					  			<td><?= htmlspecialchars($dt['kecamatan']); ?></td>
+								<td><?= htmlspecialchars($dt['desa']); ?></td>
+								<td><?= htmlspecialchars($dt['nama_bumdes']); ?></td>
+								<td align="center">
+									<?= htmlspecialchars(
+										$dt['status_badan_hukum'] == 0 ? "Pendaftaran Badan Hukum" :
+										($dt['status_badan_hukum'] == 1 ? "Nama Terverifikasi" :
+										($dt['status_badan_hukum'] == 2 ? "Perbaikan Dokumen Badan Hukum" :
+										($dt['status_badan_hukum'] == 3 ? "Dokumen Badan Hukum Terverifikasi" : "Status Tidak Dikenal")))); ?>
 								</td>
-					  			<td align="center"><?= $dt['lama_usaha']; ?> Tahun</td>
-					  			<td align="center"><?= $dt['jml_unit_usaha']; ?> Unit</td>
-					  			<td align="center"><?= $dt['total_modal']; ?> </td>
-					  			<td align="center"><?= $dt['perkembangan_modal']; ?> </td>
-								<!-- ini td diedit blm ditest boszzz -->
-								<td align="center"><?= $selisih ?> </td>
-					  			
-					  			<td align="center"><?= $dt['nilai_k']; ?></td>
+					  			<td align="center"><?= htmlspecialchars($dt['lama_usaha']); ?> Tahun</td>
+					  			<td align="center"><?= htmlspecialchars($dt['jml_unit_usaha']); ?> Unit</td>
+					  			<td align="center"><?= htmlspecialchars($dt['total_modal']); ?></td>
+					  			<td align="center"><?= htmlspecialchars($dt['perkembangan_modal']); ?></td>
+								<td align="center"><?=   (htmlspecialchars($dt['selisih_modal'])); ?></td>
+					  			<td align="center"><?= htmlspecialchars($dt['nilai_k']); ?></td>
 					  			<?php if ($dt['klasifikasi'] == 'pemula') { ?>
 					  				<td align="center">
-					  					<span class="badge badge-danger"><?= ucfirst($dt['klasifikasi']); ?></span>
+					  					<span class="badge badge-danger"><?= ucfirst(htmlspecialchars($dt['klasifikasi'])); ?></span>
 					  				</td>
 					  			<?php } else if ($dt['klasifikasi'] == 'berkembang') { ?>
 					  				<td align="center">
-					  					<span class="badge badge-warning"><?= ucfirst($dt['klasifikasi']); ?></span>
+					  					<span class="badge badge-warning"><?= ucfirst(htmlspecialchars($dt['klasifikasi'])); ?></span>
 				  					</td>
 					  			<?php } else if ($dt['klasifikasi'] == 'maju') { ?>
 					  				<td align="center">
-					  					<span class="badge badge-success"><?= ucfirst($dt['klasifikasi']); ?></span>
+					  					<span class="badge badge-success"><?= ucfirst(htmlspecialchars($dt['klasifikasi'])); ?></span>
 				  					</td>
 			  					<?php } ?>
 
@@ -121,7 +118,6 @@ $data = ambilSemuaDataHasilHitung();
 		</div>
 
 	</div>
-
 
 	<script src="./public/js/app.js"></script>
 </body>
